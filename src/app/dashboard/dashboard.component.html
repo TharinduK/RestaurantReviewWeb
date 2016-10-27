@@ -1,0 +1,8 @@
+<div class="grid grid-pad">
+	<div *ngFor="let cuisine of cuisines" (click)="gotoRelatedRestaurants(cuisine)" class="col-1-4">
+		<div class="well col-sm-6 col-lg-2">
+			{{cuisine.name}}
+		</div>
+	</div>
+</div>
+
