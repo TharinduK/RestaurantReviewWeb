@@ -23,8 +23,10 @@
 		<button class="btn btn-sm" (click)="goBack()">Back</button>
 		<button class="btn btn-success btn-sm" (click)="save()">Save</button>
 	</div>
-	<div *ngFor="let reviewe of reviews" class="alert alert-dismissible alert-info">
+	<br>
+	<button class="btn btn-success btn-sm" (click)="gotoAddReview()">Add Review</button>
+	<div *ngFor="let review of reviews" class="alert alert-dismissible alert-info">
 		<strong>{{review.rating}} out of 5 rating</strong><br> {{review.comment}} <br/><br/>
-		<strong>Posted</strong> {{postedDateTime | date:"MM/dd/yy" }} <span class="badge"># {{review.number}}</span>
+		<strong>Posted</strong> {{review.postedDateTime | date:"MM/dd/yy" }} <span class="badge"># {{review.reviewNumber}}</span>
 	</div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
 
 import { RestaurantService, Restaurant } from '../shared';
 import { AuthService } from '../auth.service'
@@ -11,15 +11,28 @@ import { AuthService } from '../auth.service'
   styleUrls: ['./restaurants.component.css']
 })
 export class RestaurantsComponent implements OnInit {
+  protected restaurantSvc: RestaurantService;
+  protected router: Router;
+  protected authSvc: AuthService;
+
   public restaurants: Restaurant[];
   public errorMessage: string;
   mode = 'Observable';
 
   constructor(
-    private restaurantSvc: RestaurantService,
-    private router: Router,
-    private authSvc: AuthService
-  ) { }
+    restaurantSvc: RestaurantService,
+    router: Router,
+    authSvc: AuthService
+  ) { 
+    this.restaurantSvc = restaurantSvc;
+    this.router = router;
+    this.authSvc = authSvc;
+  }
+  
+  gotoRestaurant(restSelected: Restaurant): void {
+    let link = ['/detail', restSelected.id];
+    this.router.navigate(link);
+  }
 
   getRestaurants(): void {
     this.restaurantSvc.getRestaurants().subscribe(
@@ -50,5 +63,3 @@ export class RestaurantsComponent implements OnInit {
 
   }
 }
-
-

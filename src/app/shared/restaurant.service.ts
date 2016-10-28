@@ -9,7 +9,7 @@ import { Cuisine, Restaurant, Review } from '.';
 
 @Injectable()
 export class RestaurantService {
-  public Server: string = 'http://localhost:5214/api/'; //'https://tharindudemoapi.azurewebsites.net/api/';
+  public Server: string = 'https://tharindudemoapi.azurewebsites.net/api/'; //'http://localhost:5214/api/';  //
   private restaurantsUrl = this.Server + 'restaurants';
   private cuisinesUrl = this.Server + 'cuisines';
   private cuiRestPreUrl = this.Server + 'cuisines/';

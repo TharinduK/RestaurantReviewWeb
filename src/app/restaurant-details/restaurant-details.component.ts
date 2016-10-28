@@ -59,6 +59,11 @@ export class RestaurantDetailsComponent implements OnInit {
     //       () => console.log("Finished getting restaurant"));
   }
 
+  gotoAddReview() {
+    let link = ['/addReview', this.restaurant.id];
+    this.router.navigate(link);
+  }
+
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
       let id = +params['id'];

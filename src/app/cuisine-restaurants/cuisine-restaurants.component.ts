@@ -3,27 +3,25 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Restaurant, RestaurantService } from '../shared';
 import { AuthService } from '../auth.service'
+import { RestaurantsComponent } from '../restaurants';
 
 
 @Component({
   selector: 'app-cuisine-restaurants',
-  templateUrl: './cuisine-restaurants.component.html',
-  styleUrls: ['./cuisine-restaurants.component.css']
+  templateUrl: '../restaurants/restaurants.component.html',
+  styleUrls: ['../restaurants/restaurants.component.css']
 })
-export class CuisineRestaurantsComponent implements OnInit {
+export class CuisineRestaurantsComponent extends RestaurantsComponent implements OnInit {
   public restaurants: Restaurant[]
   public errorMessage: string;
 
-  constructor(
-    private restaurantSvc: RestaurantService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private authSvc: AuthService) { }
+  protected route: ActivatedRoute;
 
-  gotoRestaurant(restSelected: Restaurant): void {
-    let link = ['/detail', restSelected.id];
-    this.router.navigate(link);
+  constructor(restaurantSvc: RestaurantService, router: Router, authSvc: AuthService, route: ActivatedRoute) {
+    super(restaurantSvc, router, authSvc);
+    this.route = route;
   }
+
 
   getCuisineRelatedRestaurants(id: number): void {
     this.restaurantSvc.getCuisineRelatedRestaurants(id).subscribe(
@@ -32,20 +30,6 @@ export class CuisineRestaurantsComponent implements OnInit {
       () => console.log("Finished getting restaurants for cuisine"));
 
   }
-
-  removeRestaurant(restSelected: Restaurant) {
-    this.restaurantSvc.removeRestaurant(restSelected.id)
-      .subscribe(
-      wasSucessful => this.showMessage(wasSucessful),
-      error => this.errorMessage = <any>error);
-  }
-
-  showMessage(wasSucessful: boolean): void {
-    if (wasSucessful) alert("Restaurant removed.");
-    else alert("Restaurant was NOT removed.");
-  }
-
-
 
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
