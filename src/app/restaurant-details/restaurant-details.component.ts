@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common'
 
-import { Restaurant, RestaurantService, Cuisine, Review } from '../shared';
+import { Restaurant, RestaurantService, Cuisine, } from '../shared';
+import { RestaurantReviewsComponent } from '../restaurant-reviews';
 import { AuthService } from '../auth.service'
 
 @Component({
@@ -14,7 +15,7 @@ export class RestaurantDetailsComponent implements OnInit {
   public errorMessage: string;
   public restaurant: Restaurant;
   public cuisines: Cuisine[];
-  public reviews: Review[];
+  private submitted:boolean;
 
   constructor(
     private restaurantSvc: RestaurantService,
@@ -38,21 +39,14 @@ export class RestaurantDetailsComponent implements OnInit {
       () => console.log("Finished getting cuisines"));
   }
 
-  getReviews(id: number): void {
-    this.restaurantSvc.getReviews(id)
-      .subscribe(
-      data => this.reviews = data,
-      error => this.errorMessage = <any>error,
-      () => console.log("Finished getting reviews"));
-
-  }
 
   showMessage(wasSucessful: boolean): void {
     if (wasSucessful) alert("Restaurant removed.");
     else alert("Restaurant was NOT removed.");
   }
 
-  save(): void {
+  updateRestaurant(): void {
+    alert("Method not implemented");
     // this.restaurantSvc..getRestaurant(id)
     //       .subscribe(data => this.restaurant = data,
     //       error => this.errorMessage = <any>error,
@@ -68,13 +62,13 @@ export class RestaurantDetailsComponent implements OnInit {
     this.route.params.forEach((params: Params) => {
       let id = +params['id'];
       this.getRestaurant(id);
-      this.getReviews(id);
     });
-
     this.getCuisines();
-
-
   }
 
+  onSubmit(): void {
+    this.submitted = true;
+    this.updateRestaurant();
+  }
 
 }

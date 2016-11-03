@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../auth.service'
+import { AuthService } from '../auth.service'
+
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Location } from '@angular/common'
+
+import { Restaurant, RestaurantService, Cuisine, Review } from '../shared';
+
 
 @Component({
   selector: 'app-restaurant-reviews',
@@ -7,10 +13,29 @@ import {AuthService} from '../auth.service'
   styleUrls: ['./restaurant-reviews.component.css']
 })
 export class RestaurantReviewsComponent implements OnInit {
+  public errorMessage: string;
+  public reviews: Review[];
 
-  constructor(private authSvc:AuthService) { }
+  constructor(
+    private authSvc: AuthService,
+    private route: ActivatedRoute,
+    private restaurantSvc: RestaurantService
+  ) { }
 
-  ngOnInit() {
+  getReviews(id: number): void {
+    this.restaurantSvc.getReviews(id)
+      .subscribe(
+      data => this.reviews = data,
+      error => this.errorMessage = <any>error,
+      () => console.log("Finished getting reviews"));
+
   }
 
+  ngOnInit() {
+    this.route.params.forEach((params: Params) => {
+      let id = +params['id'];
+      this.getReviews(id);
+
+    });
+  }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { Restaurant, RestaurantService } from '../shared';
+import { Restaurant, Review, RestaurantService } from '../shared';
 
 
 @Component({
@@ -13,9 +13,9 @@ import { Restaurant, RestaurantService } from '../shared';
 export class AddReviewComponent implements OnInit {
   public restaurant: Restaurant;
   public errorMessage: string;
-  public newComment: string;
-  public newRating: number;
-  public newReview: any;
+  public newReview: Review;
+
+  private submitted: boolean = false;
 
 
   constructor(
@@ -23,7 +23,14 @@ export class AddReviewComponent implements OnInit {
     private restaurantSvc: RestaurantService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    this.newReview = new Review();
+    this.newReview.comment = "";
+    this.newReview.rating = 1;
+    console.log("Comment:" + this.newReview.comment + "  rating:" + this.newReview.rating);
+  }
+
+  get diagnostic() { return JSON.stringify(this.newReview); }
 
   getRestaurant(id: number): void {
     this.restaurantSvc.getRestaurant(id).subscribe(
@@ -33,7 +40,9 @@ export class AddReviewComponent implements OnInit {
   }
 
   addReview(): void {
-    this.restaurantSvc.addReview(this.restaurant.id, this.newRating, this.newComment).subscribe(
+    debugger;
+    this.restaurantSvc.addReview(this.restaurant.id, this.newReview.rating, this.newReview.comment)
+      .subscribe(
       data => this.newReview = data,
       error => this.errorMessage = <any>error,
       () => console.log("Finished adding review"));
@@ -44,6 +53,10 @@ export class AddReviewComponent implements OnInit {
     this.location.back();
   }
 
+  onSubmit(): void {
+    this.submitted = true;
+    this.addReview();
+  }
   ngOnInit() {
     this.route.params.forEach((params: Params) => {
       let id = +params['id'];

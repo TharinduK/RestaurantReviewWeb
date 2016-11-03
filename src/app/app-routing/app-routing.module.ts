@@ -13,13 +13,13 @@ import { AddRestaurantComponent } from '../add-restaurant';
 import { AddReviewComponent } from '../add-review';
 
 const routes: Routes = [
-    { path: '', component: DashboardComponent },
+    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+    { path: 'dashboard', component: DashboardComponent },
     { path: 'restaurants', component: RestaurantsComponent },
     { path: 'cuisine/:id', component: CuisineRestaurantsComponent },
-    { path: 'detail/:id', component: RestaurantDetailsComponent },
-    { path: 'addRestaurant', component: AddRestaurantComponent, canActivate: [AuthGuard] },
-    { path: 'addReview/:id', component: AddReviewComponent }
-
+    { path: 'restaurant/:id', component: RestaurantDetailsComponent,    },
+    { path: 'addReview/:id', component: AddReviewComponent },
+    { path: 'addRestaurant', component: AddRestaurantComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

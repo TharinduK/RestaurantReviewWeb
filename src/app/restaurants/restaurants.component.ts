@@ -30,7 +30,7 @@ export class RestaurantsComponent implements OnInit {
   }
   
   gotoRestaurant(restSelected: Restaurant): void {
-    let link = ['/detail', restSelected.id];
+    let link = ['/restaurant', restSelected.id];
     this.router.navigate(link);
   }
 

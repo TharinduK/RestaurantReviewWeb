@@ -1,32 +1,31 @@
 <div *ngIf="restaurant">
 	<h2>{{restaurant.name}} - ({{restaurant.cuisineName}})</h2>
 	<strong>Average Rating:{{restaurant.averageRating.toFixed(2)}}</strong><br/>
-	 <strong>Number of reviews: {{restaurant.reviewCount}}</strong>
+	<strong>Number of reviews: {{restaurant.reviewCount}}</strong>
 
-	<div *ngIf="authSvc.authenticated()" class="form-horizontal">
+	<form *ngIf="authSvc.authenticated()" class="form-horizontal" (ngSubmit)="onSubmit()" #updateForm="ngForm">
 		<div class="form-group">
-			<label for="cuisineName" class="col-lg-2 control-label">Cuisine</label>
-
-			<select class="form-control" id="select" [(ngModel)]="cusineId">
-          <option *ngFor="let cuisine of cuisines" [(value)]="cuisine.id" [selected] ="cuisine.id==restaurant.cuisineId" >{{cuisine.name}}</option>
-          
+			<label for="cuisineName" class="control-label">Cuisine</label>
+			<select class="form-control" id="cuisineName" [(ngModel)]="restaurant.cuisineName" name="cuisineName" required>
+          		<option *ngFor="let cuisine of cuisines" 
+				  [(value)]="cuisine.id" >{{cuisine.name}}</option>
         </select>
 			<span class="help-block">select cusine</span>
 		</div>
 
 		<div class="form-group">
-			<label for="restName" class="col-lg-2 control-label">Restaurant Name</label>
-			<input class="form-control" id="restName" [(ngModel)]="restaurant.name" placeholder="enter restaurant name" />
-			<span class="help-block">enter restaurant name</span>
+			<label for="restName" class="control-label">Restaurant Name</label>
+			<input type="text" class="form-control" id="restName" name="restName" [(ngModel)]="restaurant.name" placeholder="enter restaurant name"
+				required />
+			<!--<div [hidden]="restName.valid || restName.pristine" class="alert alert-danger">
+				Restaurant name is required
+			</div>-->
 		</div>
 
-		<button class="btn btn-sm" (click)="goBack()">Back</button>
-		<button class="btn btn-success btn-sm" (click)="save()">Save</button>
-	</div>
+		<button class="btn btn-default"(click)="goBack()">Back</button>
+		<button class="btn btn-primary" type="submit" [disabled]="!updateForm.form.valid">Save</button>
+	</form>
 	<br>
-	<button class="btn btn-success btn-sm" (click)="gotoAddReview()">Add Review</button>
-	<div *ngFor="let review of reviews" class="alert alert-dismissible alert-info">
-		<strong>{{review.rating}} out of 5 rating</strong><br> {{review.comment}} <br/><br/>
-		<strong>Posted</strong> {{review.postedDateTime | date:"MM/dd/yy" }} <span class="badge"># {{review.reviewNumber}}</span>
-	</div>
+	<button class="btn btn-success" (click)="gotoAddReview()">Add Review</button>
+	<app-restaurant-reviews></app-restaurant-reviews>
 </div>

@@ -19,7 +19,6 @@ export class RestaurantService {
   private ReviewPostUrl = '/reviews';
   
 
-
   constructor(private http: Http) { }
 
   getRestaurants(): Observable<Restaurant[]> {
@@ -56,7 +55,7 @@ export class RestaurantService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    var reviewToAdd: Review;
+    var reviewToAdd = new Review();
     reviewToAdd.comment = comment;
     reviewToAdd.rating = rating;
     reviewToAdd.userName = "test";//must remove hard coded value
@@ -92,8 +91,4 @@ export class RestaurantService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
-
-
-
-
 }
