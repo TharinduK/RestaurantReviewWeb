@@ -3,7 +3,7 @@
 	<strong>Average Rating:{{restaurant.averageRating.toFixed(2)}}</strong><br/>
 	<strong>Number of reviews: {{restaurant.reviewCount}}</strong>
 
-	<form *ngIf="authSvc.authenticated()" class="form-horizontal" (ngSubmit)="onSubmit()" #updateForm="ngForm">
+	<form *ngIf="authSvc.isAuthenticated()" class="form-horizontal" (ngSubmit)="onSubmit()" #updateForm="ngForm">
 		<div class="form-group">
 			<label for="cuisineName" class="control-label">Cuisine</label>
 			<select class="form-control" id="cuisineName" [(ngModel)]="restaurant.cuisineName" name="cuisineName" required>

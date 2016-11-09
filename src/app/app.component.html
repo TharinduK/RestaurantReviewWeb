@@ -16,9 +16,9 @@
 				<li><a routerLink="/restaurants">Restaurants</a></li>
 			</ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" (click)="authSvc.login()" *ngIf="!authSvc.authenticated()" >Login</a></li>
-				<li><a routerLink="/addRestaurant" *ngIf="authSvc.authenticated()">Add</a></li>
-                <li><a href="#" (click)="authSvc.logout()" *ngIf="authSvc.authenticated()" >Logout</a></li>
+                <li><a href="#" (click)="authSvc.doLogin()" *ngIf="!authSvc.isAuthenticated()" >Login</a></li>
+				<li><a routerLink="/addRestaurant" *ngIf="authSvc.isAuthenticated()">Add</a></li>
+                <li><a href="#" (click)="authSvc.doLogout()" *ngIf="authSvc.isAuthenticated()" >Logout</a></li>
 			</ul>
 		</div>
 		<!--/.nav-collapse -->

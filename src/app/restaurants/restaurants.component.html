@@ -5,8 +5,8 @@
 		<br/>
 		<button class="btn btn-success btn-sm" (click)="gotoAddReview(restaurant)">Add Review</button>
 		<button class="btn btn-success btn-sm" (click)="gotoRestaurant(restaurant)">View Restaurant</button>
-		<button *ngIf="authSvc.authenticated()" class="btn btn-success btn-sm" (click)="gotoRestaurant(restaurant)">Update Restaurant</button>
-		<button *ngIf="authSvc.authenticated()" class="btn btn-success btn-sm btn-danger" (click)="removeRestaurant(restaurant)">Remove Restaurant</button>
+		<button *ngIf="authSvc.isAuthenticated()" class="btn btn-success btn-sm" (click)="gotoRestaurant(restaurant)">Update Restaurant</button>
+		<button *ngIf="authSvc.isAuthenticated()" class="btn btn-success btn-sm btn-danger" (click)="removeRestaurant(restaurant)">Remove Restaurant</button>
 	</li>
 </ul>
 <div *ngIf="((restaurants == undefined) || (restaurants.lenght <= 1) )">
